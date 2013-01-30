@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<!--<html lang="en" manifest="/manifest.appchache">-->
+<html lang="en">
+<head>
+	<meta charset=utf-8>
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta name="viewport" content="maximum-scale=1.0">
+    <meta name="viewport" content="user-scalable=no">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/ios/assets/css/settings.css"/>
+
+    <!-- Application source. -->
+    <script data-main="/ios/app/settings/requireconfig" src="/ios/assets/js/libs/require.js"></script>
+
+	<title>Settings</title>
+</head>
+
+
+<body class="settings app">
+    <div class='content' id="${id}"></div>
+    <div class='footer' id="${id}"></div>
+
+
+    <!-- SCRIPT TEMPLATES -->
+    <!-- main page Parametres-->
+    <script id="main_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Paramètres</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='setting_section_content'>
+            <div class='settings_user_status'>Vous n'êtes pas connecté avec Purple</div>
+            <div class='settings_button button_connexion'>Connexion</div>
+
+            <div class='main_list_container main_setting_list'>
+                <!-- profil -->
+                <h1 class="settings_section_title">Profil</h1>
+                <ul class="settings_list">
+                    <li><div class="button_profile">Éditer mon profil<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                </ul>
+
+                <!-- Comptes -->
+                <h1 class="settings_section_title">Comptes</h1>
+                <ul class="settings_list">
+                    <li><div class="button_twitter">Twitter<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                    <li><div class="button_facebook">Facebook<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                </ul>
+
+                <!-- General -->
+                <h1 class="settings_section_title">Générale</h1>
+                <ul class="settings_list">
+                    <li><div class="button_help">Aide<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                    <li><div class="button_about">À propos de cette application<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                </ul>
+            </div>
+        </div>
+    </script>
+
+    <!-- Signin -->
+    <script id="signin_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Connexion</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='signin_section_content'>
+            <div class='connextion_title'>CONNECTEZ-VOUS À image purple</div>
+            <div class='failed_message'>Echec de la connexion</div>
+            <div class='connexion_user_name'>
+                <input type="text" class='text_input input_email' value="Adresse de courriel" />
+            </div>
+            <div class='connexion_user_password'>
+                <input type="text" class='text_input input_password' value="Mot de passe" />
+            </div>
+            <div class='connexion_remember'>
+                <div class='check_box check_box_off'></div>
+            </div>
+            <div class='connexion_remember_text'>Se souvenir de moi</div>
+            <div class='link password_forgot'>Mot de passe oublié ?</div>
+            <div class='settings_button button_connect'>Connexion</div>
+            <div class='settings_button button_connect_later'>Me connecter plus tard</div>
+            <div class='first_separator'>
+                <div class='separator_lines'></div>
+            </div>
+            <div class='not_member_text'>Pas encore membre?</div>
+            <div class='register link'>Créer un compte</div>
+            <div class='second_separator'>
+                <div class='separator_lines'></div>
+            </div>
+            <div class='tv5_text'>L'application TV5 vous permets de tout savoir sur les émissions de la chaînes</div>
+            <div class='purple_text'>Purple est la plateforme qui supporte l'application TV5</div>
+        </div>
+    </script>
+
+    <!-- Forgot password find -->
+    <script id="forgot_password_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Retrouver mon mot de passe</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='forgot_pass_section_content'>
+            <div class='forgot_title'>VOUS AVEZ OUBLIÉ VOTRE MOT DE PASSE?</div>
+            <div class='forgot_text'>Entrez votre adresse de courriel pour recevoir votre mot de passe.</div>
+            <div class='forgot_email'>
+               <input type="text" class='text_input' value="$$$" />
+            </div>
+            <div class='settings_button forgot_button_send'>Envoyer</div>
+            <div class='settings_button forgot_button_cancel'>Annuler</div>
+         </div>
+    </script>
+
+
+    <!-- Signup -->
+    <script id="signup_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Creation du compte Purple</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+        <div class='signup_section_content'>
+        <div class="signup_title">CRÉEZ VOTRE COMPTE PURPLE</div>
+            <div class='signup_firstname'>
+                <input type="text" class='text_input input_email' value="Prénom" />
+            </div>
+            <div class='signup_lastName'>
+                <input type="text" class='text_input input_email' value="Adresse de couriel" />
+            </div>
+            <div class='signup_pass1'>
+                <input type="text" class='text_input input_password password1' value="Mot de passe" />
+            </div>
+            <div class='signup_pass2'>
+               <input type="text" class='text_input input_password password2' value="Confirmation not de passe" />
+            </div>
+            <div class='settings_button signup_button'>Enregistrer</div>
+            <div class='signin_first_separator'>
+                <div class='separator_lines'></div>
+            </div>
+            <div class='signin_already_member_text'>Deja membre de Purple?</div>
+            <div class='signin_link link'>Connexion</div>
+            <div class='signin_second_separator'>
+                <div class='separator_lines'></div>
+            </div>
+        </div>
+    </script>
+
+
+    <!-- confirmation connection-->
+    <script id="confirmation_register_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Confirmation</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+        <div class='confirmation_section_content'>
+            <div>Un couriel a été envoyé à l'adresse xxxxxx. Veuillez cliquer sur le lien de confirmation inclus dans celui-ci afin de valider l'enregistrement de votre compte. </div>
+            <div class='settings_button confirmation_button_ok'>Ok</div>
+        </div>
+    </script>
+
+
+    <!-- Signup success -->
+    <script id="signup_success_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Liaison des comptes</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+        <div class='signup_succes_section_content'>
+        <div class="signup_succes_text1">Votre compte à été crée avec succès</div>
+        <div class="signup_succes_text2">TV5, C'EST MEILLEUR AVEC VOS AMIS!</div>
+        <div class="signup_succes_text3">Liez vos comptes Facebook et Twitter et partagez vos coups de coeur TV5 avec vos amis</div>
+        <div class='settings_button link_facebook'>Lier Facebook</div>
+        <div class='settings_button link_twitter'>Lier Twitter</div>
+        <div class="link link_later">Plus tard ></div>
+        </div>
+    </script>
+
+    <!-- facebook settings -->
+    <script id="facebook_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Facebook</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='facebook_setting_section_content facebook_list'>
+            <h1 class="facebook_settings_section_title">Facebook</h1>
+                <div class='facebook_main_list_container'>
+                    <!-- Facebook -->
+                    <ul class="settings_list">
+                        <li><div class="button_authorize">Authoriser (Purple soit être authorisé pour intégrer Facebook)<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                        <li><div>Publier quand j'active À l'écoute<div id="checkins_sliding" class='slidingToggle'></div></div></li>
+                        <li><div>Publier mes J'aime<div id="likes_sliding" class='slidingToggle'></div></div></li>
+                        <li><div>Publier mes favoris comme des J'aime<div id="favourites_sliding" class='slidingToggle'></div></div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- Twitter settings -->
+    <script id="twitter_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Paramètres de publication</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='facebook_setting_section_content facebook_list'>
+            <h1 class="facebook_settings_section_title">Twitter</h1>
+                <div class='facebook_main_list_container'>
+                    <!-- Facebook -->
+                    <ul class="settings_list">
+                        <li><div class="button_authorize">Authoriser (Purple soit être authorisé pour intégrer Facebook)<img class="button_arrow" src="/ios/assets/images/purpleui/arrow.png" align="right"/></div></li>
+                        <li><div>Tweeter quand j'active À l'écoute<div id="listen_sliding" class='slidingToggle'></div></div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- Profile view template -->
+    <script id="profile_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Profil</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='profile_content'>
+            <div class='change_name_content'>
+                <div class='change_name_title profile_title'>CHANGER MON PRÉNOM</div>
+                <div class='profile_name_input'>
+                    <input type="text" class='text_input profile_name' value="Nouveau prenom" />
+                </div>
+                <div class='profile_password_input'>
+                    <input type="text" class='text_input input_password' value="Mot de passe" />
+                </div>
+                <div class='settings_button button_save_change_name'>Enregistrer les modifications</div>
+            </div>
+
+            <div class='profile_first_separator'>
+                <div class='separator_lines'></div>
+            </div>
+
+            <div class='change_password_content'>
+                <div class='change_password_title profile_title'>CHANGER MON MOT DE PASSE</div>
+                <div class='profile_pass1_input'>
+                    <input type="text" class='text_input input_password' value="Mot de passe" />
+                </div>
+                <div class='profile_pass2_input'>
+                    <input type="text" class='text_input input_password' value="Nouveau mot de passe" />
+                </div>
+                <div class='profile_pass3_input'>
+                    <input type="text" class='text_input input_password' value="Nouveau mot de passe" />
+                </div>
+                <div class='settings_button button_change_password'>Enregistrer les modifications</div>
+            </div>
+
+            <div class='profile_second_separator'>
+                <div class='separator_lines'></div>
+            </div>
+
+            <div class='delete_account_content'>
+                <div class='delete_account_title profile_title'>SUPPRIMER MON COMPTE</div>
+                <div class='warning_text'>IMPORTANT! Si vous supprimez votre compte, vos parametres seront définitivement perdus.</div>
+                <div class='profile_delete_input'>
+                    <input type="text" class='text_input input_password' value="Mot de passe" />
+                </div>
+                <div class='settings_button button_delete_account'>Enregistrer les modifications</div>
+            </div>
+
+        </div>
+    </script>
+
+
+    <!-- Help view template -->
+    <script id="help_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>Aide</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+    </script>
+
+    <!-- About view template -->
+    <script id="about_settings_tmpl" type="text/x-jquery-tmpl">
+        <div class='settings_toolbar'>
+            <div class='settings_page_title'>À Propos</div>
+            <div class="settings_back_button"><span></span>Retour</div>
+        </div>
+
+        <div class='about_content'>
+            <div class='version'>Version ${version}</div>
+            <div class='client'>@2012 ${client} tous droits réservés</div>
+            <div class='revision_date'>Revision Date: ${revision_date}</div>
+            <div class='revision_id'>Revision Id: ${revision_id}</div>
+            <div class='commit_tag'>Commit tag: ${commit_tag}</div>
+        </div>
+    </script>
+
+
+    <!-- FOOTER -->
+    <script id="footer_tmpl" type="text/x-jquery-tmpl">
+        <div class='footer_container'>
+            <div class='footer_table'>
+                <table border="0">
+                    <tr height="60px">
+                        <td class="footer_title">UNE FOIS CONNECTÉ À PURPLE, VOUS POURREZ...</td>
+                    </tr>
+                </table>
+                <table border="0">
+                    <tr height="20px">
+                        <td rowspan="2">IMAGE</td>
+                        <td class='footer_sub_title'>Synchro</td>
+                        <td rowspan="2">IMAGE</td>
+                        <td class='footer_sub_title'>À l'écoute</td>
+                        <td rowspan="2">IMAGE</td>
+                        <td class='footer_sub_title'>J'aime</td>
+                        <td rowspan="2">IMAGE</td>
+                        <td class='footer_sub_title'>Favoris</td>
+                    </tr>
+                    <tr height="60px" >
+                        <td class='footer_desc'>Synchroniser votre tablette et votre télé.</td>
+                        <td class='footer_desc'>Partager ce que vous regarder avec vos amis.</td>
+                        <td class='footer_desc'>Faire connaitre les émissions que vous aimez.</td>
+                        <td class='footer_desc'>Trouvez rapidement vos émissions préférées.</td>
+                    </tr>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </script>
+
+
+</body>
