@@ -1,0 +1,62 @@
+.panel_guide_inforBarBG {
+    width : 100px;
+    background-color: black;
+}
+
+.panel_guide_infoBarTime {
+   font-size: 18px; 
+}
+
+.panel_guide_infoBarName {
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.panel_onNow {
+    
+}
+
+.panel_onNow_buttonLike{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2F2727), to(#1a82f7));
+    position : absolute;
+    background-color: #0f0; 
+    display: block; 
+    height: 100px; 
+    width: 100px;
+    top : 140px;
+    left : 0px;
+}
+
+.panel_onNow_buttonListen{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2F2727), to(#1a82f7));
+    position : absolute;
+    background-color: #0f0; 
+    display: block; 
+    height: 100px; 
+    width: 100px;
+    top : 140px;
+    left : 100px;
+}
+
+.panel_onNow_buttonSync{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2F2727), to(#1a82f7));
+    position : absolute;
+    background-color: #0f0; 
+    display: block; 
+    height: 100px; 
+    width: 100px;
+    top : 140px;
+    left : 200px;
+}
+
+.panel_onNow_timeBar{
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2F2727), to(#1a82f7));
+    position : absolute;
+    background-color: #0f0; 
+    display: block; 
+    height: 20px; 
+    width: 255px;
+    z-index:90;
+    top:120px;
+}
